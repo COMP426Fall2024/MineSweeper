@@ -97,13 +97,13 @@ let MSCellView = function(x, y, model, controller, render_div) {
     let render = () => {
         render_div.innerHTML = '';
         if (cell.isRevealed()) {
-            if (cell.hasBomb()) {
+            if (cell.has_bomb) {
                 render_div.innerHTML = 'X';
             } else {
-                let bomb_count = cell.getNeighborBombCount();
+                let bomb_count = cell.neighbor_bomb_count;
                 if (bomb_count != 0) {
                     let bomb_count_label = document.createElement('div');
-                    bomb_count_label.innerHTML = cell.getNeighborBombCount();
+                    bomb_count_label.innerHTML = cell.neighbor_bomb_count;
                     bomb_count_label.addEventListener('click', (e) => {
                         controller.clearNeighborhood(x,y);
                     });

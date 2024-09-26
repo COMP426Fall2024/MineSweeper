@@ -7,9 +7,9 @@ export let MineSweeperController = function (model) {
     
         let game_finished = true;
         model.field.forAllCells(c => {
-            if (c.hasBomb() && !c.isMarked()) {
+            if (c.has_bomb && !c.isMarked()) {
                 game_finished = false;
-            } else if (!c.hasBomb() && !c.isRevealed()) {
+            } else if (!c.has_bomb && !c.isRevealed()) {
                 game_finished = false;
             }
         });
@@ -39,9 +39,9 @@ export let MineSweeperController = function (model) {
         cell.reveal();
 
         // If this is a bomb, game is over. 
-        if (cell.hasBomb()) {
+        if (cell.has_bomb) {
             model.field.forAllCells(c => {
-                if (c.hasBomb()) {
+                if (c.has_bomb) {
                     c.reveal();
                 }
             });
@@ -51,8 +51,8 @@ export let MineSweeperController = function (model) {
         }
 
         // If revealing a cell with no bombs in neighborhood, reveal the neighborhood.
-        if (cell.getNeighborBombCount() == 0) {
-            cell.getNeighbors().forEach(n => this.reveal(n.x, n.y));
+        if (cell.neighbor_bomb_count == 0) {
+            cell.neighbors.forEach(n => this.reveal(n.x, n.y));
         };
 
         checkForFinish();
@@ -85,15 +85,14 @@ export let MineSweeperController = function (model) {
 
         let cell = model.getCell(x,y);
 
-        if (!cell.isRevealed() || cell.hasBomb()) {
+        if (!cell.isRevealed() || cell.has_bomb) {
             // Can only clear neighborhood of revealed cells without bombs
             return;
         }
 
-        let neighborhood = cell.getNeighbors();
-        let mark_count = neighborhood.reduce((mc, n) => mc += (n.isMarked() ? 1 : 0), 0);
-        if (mark_count == cell.getNeighborBombCount()) {
-            neighborhood.forEach(n => {
+        let mark_count = cell.neighbors.reduce((mc, n) => mc += (n.isMarked() ? 1 : 0), 0);
+        if (mark_count == cell.neighbor_bomb_count) {
+            cell.neighbors.forEach(n => {
                 if (n.isUnmarked()) {
                     // Want to use the controller's reveal rather than cell model reveal
                     // because want to make sure controller's reveal logic is applied.
