@@ -1,4 +1,4 @@
-let MineSweeperModel = function (width, height, bomb_count) {
+export let MineSweeperModel = function (width, height, bomb_count) {
     // Should check that bomb_count <= width * height but will assume that.
 
     this.width = width;
@@ -150,7 +150,7 @@ MineSweeperCell.prototype.hasBomb = function () {
 }
 
 MineSweeperCell.prototype.getNeighbors = function () {
-    neighbors = [];
+    let neighbors = [];
     for (let dx=-1; dx<=1; dx++) {
         for (let dy=-1; dy<=1; dy++) {
             if (dx != 0 || dy != 0) {

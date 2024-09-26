@@ -1,4 +1,4 @@
-let MineSweeperView = function (model, controller, render_div) {
+export let MineSweeperView = function (model, controller, render_div) {
 
     // Make a div to render into if we weren't given one.
 

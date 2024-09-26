@@ -1,4 +1,4 @@
-let MineSweeperController = function (model) {
+export let MineSweeperController = function (model) {
     
     let checkForFinish = function () {
         if (!model.gameInProgress()) {
